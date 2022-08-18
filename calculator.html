@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.title{
+  margin-bottom: -5px;
+}
+
+.author{
+  font-size: small;
+  padding-bottom: 20px;
+}
+
+/* For Computers */
+@media screen and (min-width: 781px) {
+    .container {
+        width: 30%;
+    }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+    .container {
+        width: 70%;
+    }
+}
+
+/* For Phones */
+@media screen and (max-width: 540px) {
+    .container {
+        width: 80%;
+    }
+}
+
+
+
+input[type=number], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+
+
+</head>
+<body>
+
+
+<center>
+<h1 class="title">Engineering Economics Calculator</h1>
+<p class="author">By Parsa Toopchinezhad</p>
+<div class="container">
+    <label for="factor">Factor Type:</label>
+    <select id="factor" name="factor">
+      <option value="P/F">P/F</option>
+      <option value="P/A">P/A</option>
+      <option value="F/P">F/P</option>
+      <option value="F/A">F/A</option>
+      <option value="A/P">A/P</option>
+      <option value="A/F">A/F</option>
+    </select>
+    <br>
+
+    <label for="i">Interest Rate:</label>
+    <input type="number" id="i" name="i" placeholder="i%">
+    <br>
+
+    <label for="n">Number of Cycles:</label>
+    <input type="number" id="n" name="n" placeholder="n">
+    <br>
+
+    <b><p id="result"></p></b>
+
+    <button onclick="calculate_factor()">Calculate</button>
+</div>
+</center>
+
+
+</body>
+<script>
+  
+  function calculate_factor(){
+    var i = parseFloat(document.getElementById("i").value);
+    i = (i/100)
+    var n = parseInt(document.getElementById("n").value);
+    var factor = document.getElementById("factor").value
+    var result = 0
+
+    if(factor=="P/F"){
+      result = Math.pow((1+i), -n)
+    }
+    else if(factor=="P/A"){
+      result = (Math.pow((1+i),n)-1)/(i*Math.pow((1+i),n))
+    }
+    else if(factor=="F/P"){
+      result = Math.pow((1+i), n)
+    }
+    else if(factor=="F/A"){
+      result = (Math.pow((1+i),n)-1)/i
+    }
+    else if(factor=="A/P"){
+      result = (i*Math.pow((1+i),n))/(Math.pow((1+i),n)-1)
+    }
+    else if(factor=="A/F"){
+      result = i/(Math.pow((1+i),n)-1)
+    }
+    else{
+      result = "ERROR"
+    }
+    
+    result = result.toFixed(5)
+    var final_result
+    final_result = "("+factor+", "+(i*100)+", "+n+") = "+result
+    document.getElementById("result").innerHTML = final_result
+  }
+
+</script>
+</html>
